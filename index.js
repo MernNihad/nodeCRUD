@@ -8,9 +8,9 @@ app.use(express.json())// parse application/x-www-form-urlencoded
 
 dotenv.config() //
 
-const connect = async (next) => {
+const connect = async () => {
     try {
-        await mongoose.connect(`mongodb://127.0.0.1:27017/demo_1`);
+        await mongoose.connect(process.env.MONGO_URL);
         console.log('Connected to database');
     } catch (error) {
         const { status, message } = error;
@@ -18,8 +18,8 @@ const connect = async (next) => {
     }
 }
 
-app.listen(4000, () => {
+app.listen(process.env.PORT, () => {
     connect()
-    console.log(`Server running... ${4000} `);
+    console.log(`Server running... ${process.env.PORT} `);
 })
 
