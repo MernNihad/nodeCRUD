@@ -2,10 +2,13 @@ import express from "express";
 import mongoose from "mongoose"
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import authRouter from "./routes/auth.js";
+import authRouter from "./routes/auth.js"; // to import login and signup routes
+import trainerRouter from "./routes/trainer.js"; // to import login and signup routes
+import studentRouter from "./routes/student.js"; // to import login and signup routes
+import courseRouter from "./routes/course.js"
 import usersRouter from "./routes/users.js";
-import roomsRouter from "./routes/rooms.js";
-import hotelsRouter from "./routes/hotels.js";
+import branchRouter from "./routes/branch.js";
+import subcourseRouter from "./routes/subcourse.js";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import cors from "cors";
@@ -46,12 +49,16 @@ mongoose.connection.on('disconnected', err => {
 
 
 // middlewares
-app.use("/api/auth", authRouter);
-app.use("/api/users", usersRouter);
+app.use("/api/auth", authRouter); // to login and signup admin and trainer
+app.use("/api/trainer", trainerRouter); // to login and signup admin and trainer
+app.use("/api/student", studentRouter); // to login and signup admin and trainer
+// app.use("/api/users", usersRouter);
 
 
-app.use("/api/hotels", hotelsRouter);
-app.use("/api/rooms", roomsRouter);
+app.use("/api/course", courseRouter); //to create course
+app.use("/api/subcourse", subcourseRouter); //to create course
+// app.use("/api/hotels", hotelsRouter);
+app.use("/api/branch", branchRouter); // to create branch
 
 
 app.use((error, req, res, next) => {

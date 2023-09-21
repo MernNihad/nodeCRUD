@@ -1,17 +1,43 @@
-import Hotel from "../models/Hotel.js";
+import Course from "../models/Course.js";
 
 
 
-// Create Hotel
-export const createHotel = async (req, res, next) => {
 
-    const { name, type, city, address, distance, photos, desc, title, rating, rooms, cheapestPrice, featured } = req.body
 
-    const newHotel = new Hotel({ name, type, city, address, distance, photos, desc, title, rating, rooms, cheapestPrice, featured })
+// // Create Course
+// export const createCourseCode = async (req, res, next) => {
 
+//     const { courseCode } = req.body
+
+//     const newCourse = new Course({ courseCode })
+
+//     try {
+//         const savedCourse = await newCourse.save();
+//         res.status(200).json(savedCourse);
+//     } catch (error) {
+//         next(error)
+//     }
+
+// }
+// // ------------------------------------------------
+
+
+
+
+
+
+// Create Course
+export const createCourse = async (req, res, next) => {
+
+    const { title,description,isMainCourse } = req.body
+
+    
+    const newCourse = new Course({ title,description:description,isMainCourse:isMainCourse})
+    
+    console.log(newCourse)
     try {
-        const savedHotel = await newHotel.save();
-        res.status(200).json(savedHotel);
+        const savedCourse = await newCourse.save();
+        res.status(200).json(savedCourse);
     } catch (error) {
         next(error)
     }
@@ -22,16 +48,16 @@ export const createHotel = async (req, res, next) => {
 
 
 
-// Update Hotel
-export const updateHotel = async (req, res, next) => {
+// Update Course
+export const updateCourse = async (req, res, next) => {
 
     const { id } = req.params
 
-    const { name, type, city, address, distance, photos, desc, title, rating, rooms, cheapestPrice, featured } = req.body
+    const { title,description,isMainCourse } = req.body
 
     try {
-        const updatedHotel = await Hotel.findByIdAndUpdate(id, { $set: { name, type, city, address, distance, photos, desc, title, rating, rooms, cheapestPrice, featured } }, { new: true });
-        res.status(200).json(updatedHotel);
+        const updatedCourse = await Course.findByIdAndUpdate(id, { $set: { title, isMainCourse,description } }, { new: true });
+        res.status(200).json(updatedCourse);
     } catch (error) {
         next(error)
     }
@@ -40,12 +66,13 @@ export const updateHotel = async (req, res, next) => {
 
 
 
-// Delete Hotel
-export const deleteHotel = async (req, res, next) => {
+// Delete Course
+export const deleteCourse = async (req, res, next) => {
     const { id } = req.params
+
     try {
-        await Hotel.findByIdAndDelete(id);
-        res.status(200).json({ message: "Hotel has been deleted." });
+        await Course.findByIdAndDelete(id);
+        res.status(200).json({ message: "Course has been deleted." });
     } catch (error) {
         next(error)
     }
@@ -54,12 +81,12 @@ export const deleteHotel = async (req, res, next) => {
 
 
 
-// Get Hotel
-export const getHotel = async (req, res, next) => {
+// Get Course
+export const getCourse = async (req, res, next) => {
     const { id } = req.params
     try {
-        const getHotel = await Hotel.findById(id);
-        res.status(200).json(getHotel);
+        const getCourse = await Course.findById(id);
+        res.status(200).json(getCourse);
     } catch (error) {
         next(error)
     }
@@ -71,10 +98,10 @@ export const getHotel = async (req, res, next) => {
 
 
 // Get All Hotels
-export const getHotels = async (req, res, next) => {
+export const getCourses = async (req, res, next) => {
     try {
-        const Hotels = await Hotel.find();
-        res.status(200).json(Hotels);
+        const Courses = await Course.find();
+        res.status(200).json(Courses);
     } catch (error) {
         next(error);
     }

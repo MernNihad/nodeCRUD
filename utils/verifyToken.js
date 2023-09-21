@@ -27,6 +27,32 @@ export const verifyUser = (req, res, next) => {
 
 }
 
+export const verifyAdminOrTrainerRole = (req, res, next) => {
+
+    verifyToken(req, res, () => {
+        if (req.user?.isAdmin || req.user?.isTrainer ) {
+            next()
+        } else {
+            return next(createError(403, "You are not authorized!"));
+        }
+    })
+
+}
+
+
+export const verifyAdminOrStudentRole = (req, res, next) => {
+
+    verifyToken(req, res, () => {
+        console.log(req.user)
+        if (req.user?.isAdmin || req.user?.isStudent ) {
+            next()
+        } else {
+            return next(createError(403, "You are not authorized!"));
+        }
+    })
+
+}
+
 
 
 
